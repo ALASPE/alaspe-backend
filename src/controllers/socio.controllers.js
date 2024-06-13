@@ -1,4 +1,4 @@
-import { Socio } from "../models/socio.js";
+import { Socio } from "../models/Socio.js";
 
 export const getSocios = async (req, res) => {
     try{

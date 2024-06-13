@@ -2,25 +2,38 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
 export const Socio = sequelize.define('Socio', {
-  codigo_socio: {
+  CIP: {
     type: DataTypes.INTEGER,
     primaryKey: true,
   },
-  dni_socio: {
+  DNI: {
     type: DataTypes.INTEGER,
-    uniqueValue:  true,
+    uniqueValue: true,
   },
-  nombre_socio: {
+  Nombres: {
     type: DataTypes.STRING,
   },
-  apellido_socio: {
+  Apellidos: {
     type: DataTypes.STRING,
   },
-  correo_socio: {
+  Fecha_Nacimiento: {
     type: DataTypes.STRING,
   },
-  fecha_nac_socio: {
-    type: DataTypes.DATE,
+  Correo_1: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Correo_2: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  Telefono_1: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  Telefono_2: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
   password_socio: {
     type: DataTypes.STRING,
