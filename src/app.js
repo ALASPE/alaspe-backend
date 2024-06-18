@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import socioRoutes from './routes/socios.routes.js';
+import usuarioRoutes from './routes/usuario.routes.js';
 import servicioRoutes from './routes/servicios.routes.js'
 
 const app = express();
@@ -10,7 +10,7 @@ app.use(express.json()); // Servidor interpreta .json y guarda en req.body
 app.use(cors());
 
 // Rutas con prefijos
-app.use(socioRoutes);
+app.use(usuarioRoutes);
 app.use(servicioRoutes);
 
 export default app;

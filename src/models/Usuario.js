@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
-export const Socio = sequelize.define('Socio', {
+export const Usuario = sequelize.define('Usuario', {
   CIP: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -35,9 +35,19 @@ export const Socio = sequelize.define('Socio', {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  password_socio: {
+  Password: {
     type: DataTypes.STRING,
   },
+  Rol: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'socio',
+  },
+  Estado: {
+    type:DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'activo',
+  }
 },{
   timestamps: false,
 });
