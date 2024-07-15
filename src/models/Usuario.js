@@ -3,11 +3,11 @@ import { sequelize } from "../database/database.js";
 
 export const Usuario = sequelize.define('Usuario', {
   CIP: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER[7],
     primaryKey: true,
   },
   DNI: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(8),
     uniqueValue: true,
   },
   Nombres: {
@@ -17,34 +17,34 @@ export const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING,
   },
   Fecha_Nacimiento: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATEONLY,
   },
   Correo_1: {
-    type: DataTypes.STRING,
+    type: DataTypes.EMAIL,
     allowNull: false
   },
   Correo_2: {
-    type: DataTypes.STRING,
+    type: DataTypes.EMAIL,
     allowNull: true,
   },
   Telefono_1: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(9),
     allowNull: false,
   },
   Telefono_2: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(9),
     allowNull: true,
   },
   Password: {
     type: DataTypes.STRING,
   },
   Rol: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM("socio", "admin"),
     allowNull: false,
     defaultValue: 'socio',
   },
   Estado: {
-    type:DataTypes.STRING,
+    type:DataTypes.ENUM("inactivo", "activo"),
     allowNull: false,
     defaultValue: 'activo',
   }
