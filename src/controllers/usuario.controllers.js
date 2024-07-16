@@ -1,9 +1,12 @@
 import bcrypt from 'bcrypt';
+// import { sequelize } from '../database/database.js';
 import { Usuario } from "../models/Usuario.js";
 
 export const getUsuarios = async (req, res) => {
     try{
-        const usuario = await Usuario.findAll();
+        const usuario = await Usuario.findAll({
+            attributes: ['CIP', 'Nombres', 'Apellidos']
+        });
         res.json(usuario);
     } catch(error){
         return res.status(500).json( { message: error.message });
