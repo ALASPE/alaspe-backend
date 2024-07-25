@@ -1,18 +1,19 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
-export const Servicio = sequelize.define('Servicio', {
-    codigo_servicio: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+export const Servicio = sequelize.define(
+  "Servicio",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      validate: {
+        isInt: { msg: "" }
+      }
     },
-    nombre_servicio: {
-        type: DataTypes.STRING,
-    },
-    descripcion_servicio: {
-        type: DataTypes.STRING,
-    }
-},{
+  },
+  {
     timestamps: false,
-})
+  }
+);

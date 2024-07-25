@@ -5,16 +5,15 @@ import {
     updateUsuario,
     deleteUsuario,
     getUsuario
-} from '../controllers/usuario.controllers.js'
-
+} from '../controllers/usuario.controllers.js';
+import { authenticateToken, authorizeRoles } from '../middleware/auth.middleware.js';
 
 const router = Router();
 
-router.get('/usuario', getUsuarios);
-router.post('/usuario', createUsuario)
-router.put('/usuario', updateUsuario);
-router.delete('/usuario/:DNI', deleteUsuario);
-router.get('/usuario/:DNI', getUsuario);
-
+router.get('/usuario', authenticateToken, authorizeRoles('admin', 'socio'), getUsuarios);
+router.post('/usuario', authenticateToken, authorizeRoles('admin'), createUsuario);
+router.put('/usuario/:DNI', authenticateToken, authorizeRoles('admin'), updateUsuario);
+router.delete('/usuario/:DNI', authenticateToken, authorizeRoles('admin'), deleteUsuario);
+router.get('/usuario/:DNI', authenticateToken, authorizeRoles('admin', 'socio'), getUsuario);
 
 export default router;
