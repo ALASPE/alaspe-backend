@@ -25,9 +25,4 @@ app.use('/api/auth', authRoutes);
 app.use('/api', usuarioRoutes);
 app.use('/api', servicioRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
 export default app;

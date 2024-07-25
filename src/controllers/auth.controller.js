@@ -5,12 +5,12 @@ import { Usuario } from '../models/Usuario.js';
 
 export const loginUser = async (req, res) => {
     try {
-        const { DNI, password } = req.body;
+        const { DNI, Password } = req.body;
 
         const user = await Usuario.findOne({ where: { DNI } });
         if (!user) return res.status(400).json({ message: 'DNI o contraseña inválidos.' });
         
-        const isMatch = await bcrypt.compare(password, user.Password);
+        const isMatch = await bcrypt.compare(Password, user.Password);
         if (!isMatch) return res.status(400).json({ message: 'DNI o contraseña inválidos.' });
 
         const token = jwt.sign(

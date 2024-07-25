@@ -79,8 +79,6 @@ export const updateUsuario = async (req, res) => {
             Correo_2,
             Telefono_1,
             Telefono_2,
-            Estado,
-            Rol
         });
 
         res.json(usuario);
