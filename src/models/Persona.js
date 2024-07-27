@@ -1,21 +1,35 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database.js";
+// Modelo Persona.js
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../database/database.js';
 
-export const Usuario = sequelize.define('Usuario', {
-  CIP: {
+export const Persona = sequelize.define('Persona', {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
+    autoIncrement: true
+  },
+  tipo: {
+    type: DataTypes.ENUM('usuario', 'empleado'),
     allowNull: false,
     validate: {
+      isIn: {
+        args: [['usuario', 'empleado']],
+        msg: "El tipo debe ser 'usuario' o 'empleado'."
+      }
+    }
+  },
+  CIP: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    validate: {
       isInt: { msg: "El CIP debe ser un número entero." },
-      notNull: { msg: "El CIP no puede ser nulo." },
       len: {
         args: [6, 6],
         msg: "El CIP debe tener 7 dígitos."
       }
     }
   },
-  DNI: {
+  DNI: { 
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
@@ -27,7 +41,7 @@ export const Usuario = sequelize.define('Usuario', {
       }
     }
   },
-  Nombres: {
+  nombres: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
@@ -39,7 +53,7 @@ export const Usuario = sequelize.define('Usuario', {
       }
     }
   },
-  Apellidos: {
+  apellidos: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
@@ -51,30 +65,18 @@ export const Usuario = sequelize.define('Usuario', {
       }
     }
   },
-  Fecha_Nacimiento: {
+  fecha_nacimiento: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     validate: {
       isDate: { msg: "Debe ser una fecha válida." }
     }
   },
-  Correo_1: {
+  direccion: {
     type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: { msg: "El correo no puede estar vacío." },
-      notNull: { msg: "El correo no puede ser nulo." },
-      isEmail: { msg: "Por favor, introduzca una dirección de correo válida." }
-    }
+    allowNull: true
   },
-  Correo_2: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    validate: {
-      isEmail: { msg: "Por favor, introduzca una dirección de correo válida." }
-    }
-  },
-  Telefono_1: {
+  telefono_1: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
@@ -87,7 +89,7 @@ export const Usuario = sequelize.define('Usuario', {
       }
     }
   },
-  Telefono_2: {
+  telefono_2: {
     type: DataTypes.STRING,
     allowNull: true,
     validate: {
@@ -98,7 +100,23 @@ export const Usuario = sequelize.define('Usuario', {
       }
     }
   },
-  Password: {
+  correo_1: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: { msg: "El correo no puede estar vacío." },
+      notNull: { msg: "El correo no puede ser nulo." },
+      isEmail: { msg: "Por favor, introduzca una dirección de correo válida." }
+    }
+  },
+  correo_2: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    validate: {
+      isEmail: { msg: "Por favor, introduzca una dirección de correo válida." }
+    }
+  },
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
@@ -110,18 +128,18 @@ export const Usuario = sequelize.define('Usuario', {
       }
     }
   },
-  Rol: {
-    type: DataTypes.ENUM("socio", "admin"),
+  rol: {
+    type: DataTypes.ENUM("socio", "admin", "empleado"),
     allowNull: false,
     defaultValue: 'socio',
     validate: {
       isIn: {
-        args: [["socio", "admin"]],
-        msg: "El rol debe ser 'socio' o 'admin'."
+        args: [["socio", "admin", "empleado"]],
+        msg: "El rol debe ser 'socio', 'admin' o 'empleado'."
       }
     }
   },
-  Estado: {
+  estado: {
     type: DataTypes.ENUM("inactivo", "activo"),
     allowNull: false,
     defaultValue: 'activo',
@@ -131,15 +149,27 @@ export const Usuario = sequelize.define('Usuario', {
         msg: "El estado debe ser 'inactivo' o 'activo'."
       }
     }
+  },
+  area_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'Areas',
+      key: 'id'
+    }
+  },
+  puesto: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   timestamps: false,
   indexes: [
     {
       unique: true,
-      fields: ['DNI']
+      fields: ['DNI', 'correo_1', 'correo_2', 'telefono_1', 'telefono_2']
     }
   ]
 });
 
-export default Usuario;
+export default Persona;
