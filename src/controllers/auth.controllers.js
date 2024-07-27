@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../config/session.config.js';
-import { Usuario } from '../models/Usuario.js';
+import { Persona } from '../models/Persona.js';
 
 export const loginUser = async (req, res) => {
     try {
         const { DNI, Password } = req.body;
 
-        const user = await Usuario.findOne({ where: { DNI } });
+        const user = await Persona.findOne({ where: { DNI } });
         if (!user) return res.status(400).json({ message: 'DNI o contraseña inválidos.' });
         
         const isMatch = await bcrypt.compare(Password, user.Password);
