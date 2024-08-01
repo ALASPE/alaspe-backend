@@ -1,10 +1,14 @@
-import { Router } from 'express';
-import { loginUser, logoutUser, verifySession } from '../controllers/auth.controllers.js';
+import { Router } from "express";
+import {
+  loginSocio,
+  logoutSocio,
+  verifySession,
+} from "../controllers/auth.controllers.js";
 
 const router = Router();
 
-router.post('/login', loginUser);
-router.post('/logout', logoutUser);
-router.get('/verify-session', verifySession);
+router.post("/login", loginSocio);
+router.post("/logout", logoutSocio);
+router.get("/verify-session", verifySession);
 
 export default router;

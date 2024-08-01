@@ -2,35 +2,29 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/database.js';
 
 export const Cuentas = sequelize.define('Cuentas', {
-  id: {
+  cuenta_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  socio_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Usuario',
-      key: 'CIP'
-    }
-  },
-  saldo: {
-    type: DataTypes.FLOAT,
+  saldo_aporte: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0.0,
     allowNull: false,
     validate: {
-      isFloat: { msg: "El saldo debe ser un número decimal." },
-      notNull: { msg: "El saldo no puede ser nulo." }
+      isDecimal: true,
     }
   },
-  tipo: {
-    type: DataTypes.STRING,
+
+  saldo_prevision: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0.0,
     allowNull: false,
     validate: {
-      notEmpty: { msg: "El tipo no puede estar vacío." },
-      notNull: { msg: "El tipo no puede ser nulo." }
+      isDecimal: true,
     }
-  }
+  },
+
 }, {
   timestamps: false
 });
