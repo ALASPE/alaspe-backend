@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
 import { Socios } from "../models/Socios.js";
+import moment from "moment";
 
 export const getSocios = async (req, res) => {
   try {
-    const socio = await Socios.findAll({
+    const socios = await Socios.findAll({
       attributes: [
         "dni",
         "cip",
@@ -16,7 +17,12 @@ export const getSocios = async (req, res) => {
         "estado",
       ],
     });
-    res.json(socio);
+
+    socios.forEach(socio => {
+      socio.fecha_nacimiento = moment(socio.fecha_nacimiento).format('DD/MM/YYYY');
+    });
+
+    res.json(socios);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -40,6 +46,9 @@ export const getSocio = async (req, res) => {
     });
 
     if (!socio) return res.status(404).json({ message: "Socio no existe" });
+
+    socio.fecha_nacimiento = moment(socio.fecha_nacimiento).format('DD/MM/YYYY');
+    
     res.json(socio);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -73,7 +82,7 @@ export const createSocio = async (req, res) => {
       nombre,
       apellido,
       direccion,
-      fecha_nacimiento,
+      fecha_nacimiento: moment(fecha_nacimiento, 'DD/MM/YYYY').toDate(),
       telefono,
       correo,
       password: hashedPassword,
@@ -114,11 +123,13 @@ export const updateSocio = async (req, res) => {
       nombre,
       apellido,
       direccion,
-      fecha_nacimiento,
+      fecha_nacimiento: moment(fecha_nacimiento, 'DD/MM/YYYY').toDate(),
       telefono,
       correo,
       estado,
     });
+
+    socio.fecha_nacimiento = moment(socio.fecha_nacimiento).format('DD/MM/YYYY');
 
     res.json(socio);
   } catch (error) {

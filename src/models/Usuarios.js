@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Acciones } from "./Acciones.js";
+import { HistorialEstadosPrestamos } from "./HistorialEstadosPrestamos.js";
 
 export const Usuarios = sequelize.define(
   "Usuarios",

@@ -33,19 +33,19 @@ export const TiposPagos = sequelize.define("TiposPagos", {
 });
 
 TiposPagos.hasMany(Aportes, {
-  foreignKey: "Socio",
-  sourceKey: "dni",
+  foreignKey: "tipo_pago_id",
+  sourceKey: "tipo_pago_id",
 });
 Aportes.belongsTo(TiposPagos, {
-  foreignKey: "Socio",
-  targetKey: "dni",
+  foreignKey: "tipo_pago_id",
+  targetKey: "tipo_pago_id",
 });
 
 TiposPagos.hasMany(Pagos, {
-  foreignKey: "Socio",
-  sourceKey: "dni",
+  foreignKey: "tipo_pago_id",
+  sourceKey: "tipo_pago_id",
 });
 Pagos.belongsTo(TiposPagos, {
-  foreignKey: "Socio",
-  targetKey: "dni",
+  foreignKey: "tipo_pago_id",
+  targetKey: "tipo_pago_id",
 });

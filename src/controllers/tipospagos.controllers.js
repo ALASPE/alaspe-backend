@@ -1,75 +1,119 @@
-// import { Tipos_Descuentos } from '../models/Tipos_Descuentos.js';
+import { TiposPagos } from "../models/TiposPagos.js";
+import { Aportes } from "../models/Aportes.js";
+import { Pagos } from "../models/Pagos.js";
+import { registrarAccion } from "../controllers/acciones.controllers.js";
 
-// export const getTiposDescuentos = async (req, res) => {
-//     try {
-//         const tiposDescuentos = await Tipos_Descuentos.findAll();
-//         res.json(tiposDescuentos);
-//     } catch (error) {
-//         return res.status(500).json({ message: error.message });
-//     }
-// };
+export const getTiposPagos = async (req, res) => {
+    try {
+      const tiposPagos = await TiposPagos.findAll({
+        include: [
+          {
+            model: Aportes,
+            attributes: ["aportes_id", "monto_aporte", "monto_prevision", "fecha"],
+          },
+          {
+            model: Pagos,
+            attributes: ["pagos_id", "fecha_pago", "monto"],
+          },
+        ],
+      });
+      res.json(tiposPagos);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };
 
-// export const getTipoDescuento = async (req, res) => {
-//     try {
-//         const tipoDescuento = await Tipos_Descuentos.findOne({
-//             where: { id: req.params.id }
-//         });
+  export const getTipoPagoById = async (req, res) => {
+    try {
+      const tipoPago = await TiposPagos.findOne({
+        where: { tipo_pago_id: req.params.id },
+        include: [
+          {
+            model: Aportes,
+            attributes: ["aportes_id", "monto_aporte", "monto_prevision", "fecha"],
+          },
+          {
+            model: Pagos,
+            attributes: ["pagos_id", "fecha_pago", "monto"],
+          },
+        ],
+      });
+  
+      if (!tipoPago) return res.status(404).json({ message: "Tipo de pago no encontrado" });
+  
+      res.json(tipoPago);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };
 
-//         if (!tipoDescuento) return res.status(404).json({ message: 'Tipo de descuento no existe' });
-//         res.json(tipoDescuento);
-//     } catch (error) {
-//         return res.status(500).json({ message: error.message });
-//     }
-// };
+  export const createTipoPago = async (req, res) => {
+    try {
+      const { descripcion, usuario_id } = req.body;
+  
+      const newTipoPago = await TiposPagos.create({
+        descripcion,
+      });
 
-// export const createTipoDescuento = async (req, res) => {
-//     try {
-//         const { descripcion } = req.body;
+      await registrarAccion(usuario_id, 'Crear TipoPago', `Creó un tipo de pago con ID ${newTipoPago.tipo_pago_id}`);
+  
+      return res.status(201).json(newTipoPago);
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        return res
+          .status(400)
+          .json({ message: "Error de validación", errors: error.errors });
+      }
+      return res.status(500).json({ message: error.message });
+    }
+  };
 
-//         const nuevoTipoDescuento = await Tipos_Descuentos.create({
-//             descripcion
-//         });
-//         return res.status(201).json(nuevoTipoDescuento);
-//     } catch (error) {
-//         return res.status(500).json({ message: error.message });
-//     }
-// };
+  export const updateTipoPago = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { descripcion, usuario_id } = req.body;
+  
+      const tipoPago = await TiposPagos.findOne({ where: { tipo_pago_id: id } });
+  
+      if (!tipoPago) {
+        return res.status(404).json({ message: "Tipo de pago no encontrado" });
+      }
+  
+      await tipoPago.update({
+        descripcion,
+      });
 
-// export const updateTipoDescuento = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const { descripcion } = req.body;
+      await registrarAccion(usuario_id, 'Actualizar TipoPago', `Actualizó el tipo de pago con ID ${tipoPago.tipo_pago_id}`);
+  
+      res.json(tipoPago);
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        return res
+          .status(400)
+          .json({ message: "Error de validación", errors: error.errors });
+      }
+      return res.status(500).json({ message: error.message });
+    }
+  };
 
-//         const tipoDescuento = await Tipos_Descuentos.findOne({ where: { id } });
+  export const deleteTipoPago = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { usuario_id } = req.body;
+  
+      const tipoPago = await TiposPagos.findOne({ where: { tipo_pago_id: id } });
+  
+      if (!tipoPago) {
+        return res.status(404).json({ message: "Tipo de pago no encontrado" });
+      }
+  
+      await tipoPago.destroy();
 
-//         if (!tipoDescuento) {
-//             return res.status(404).json({ message: 'Tipo de descuento no encontrado' });
-//         }
-
-//         await tipoDescuento.update({
-//             descripcion
-//         });
-
-//         res.json(tipoDescuento);
-//     } catch (error) {
-//         return res.status(500).json({ message: error.message });
-//     }
-// };
-
-// export const deleteTipoDescuento = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-
-//         const deleted = await Tipos_Descuentos.destroy({
-//             where: { id },
-//         });
-
-//         if (!deleted) {
-//             return res.status(404).json({ message: 'Tipo de descuento no encontrado' });
-//         }
-
-//         res.sendStatus(204);
-//     } catch (error) {
-//         return res.status(500).json({ message: error.message });
-//     }
-// };
+      await registrarAccion(usuario_id, 'Eliminar TipoPago', `Eliminó el tipo de pago con ID ${id}`);
+  
+      res.sendStatus(204);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };
+  

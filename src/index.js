@@ -6,7 +6,6 @@ const main = async () => {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
 
-        // Synchronize all models
         await sequelize.sync({ force: true });
 
         const PORT = process.env.PORT || 4000;

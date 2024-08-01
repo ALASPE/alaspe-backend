@@ -29,12 +29,12 @@ export const Areas = sequelize.define(
 );
 
 Areas.hasMany(Usuarios, {
-  foreignKey: "areas_id",
-  sourceKey: "areas_id",
+  foreignKey: "area_id",
+  sourceKey: "area_id",
 });
 Usuarios.belongsTo(Areas, {
-  foreignKey: "areas_id",
-  targetKey: "areas_id",
+  foreignKey: "area_id",
+  targetKey: "area_id",
 });
 
 export default Areas;

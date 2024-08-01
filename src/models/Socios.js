@@ -16,7 +16,7 @@ export const Socios = sequelize.define(
         isInt: { msg: "El DNI debe ser un número entero." },
         notNull: { msg: "El DNI no puede ser nulo." },
         len: {
-          args: [7, 7],
+          args: [8, 8],
           msg: "El DNI debe tener 8 dígitos.",
         },
       },
@@ -28,7 +28,7 @@ export const Socios = sequelize.define(
       validate: {
         isInt: { msg: "El CIP debe ser un número entero." },
         len: {
-          args: [6, 6],
+          args: [7, 7],
           msg: "El CIP debe tener 7 dígitos.",
         },
       },
@@ -135,7 +135,7 @@ export const Socios = sequelize.define(
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         unique: true,
