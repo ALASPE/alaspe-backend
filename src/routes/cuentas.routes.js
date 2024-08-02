@@ -11,11 +11,11 @@ import { authenticateToken, authorizeRoles } from '../middleware/auth.middleware
 
 const router = Router();
 
-router.get("/cuentas", getCuentas);
-router.get("/cuentas/:id", getCuenta);
-router.post("/cuentas", createCuenta);
-router.put("/cuentas/:id", updateCuenta);
-router.delete("/cuentas/:id", deleteCuenta);
-router.post("/cuentas/:id/aporte", registrarAporte);
+router.get("/cuentas", authenticateToken, authorizeRoles("administrador", "empleado"), getCuentas);
+router.get("/cuentas/:id", authenticateToken, authorizeRoles("administrador", "empleado", "socio"), getCuenta);
+router.post("/cuentas", authenticateToken, authorizeRoles("administrador", "empleado"), createCuenta);
+router.put("/cuentas/:id", authenticateToken, authorizeRoles("administrador", "empleado"), updateCuenta);
+router.delete("/cuentas/:id", authenticateToken, authorizeRoles("administrador"), deleteCuenta);
+router.post("/cuentas/:id/aporte", authenticateToken, authorizeRoles("administrador", "empleado"), registrarAporte);
 
 export default router;

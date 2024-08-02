@@ -8,8 +8,8 @@ import { authenticateToken, authorizeRoles } from '../middleware/auth.middleware
 
 const router = Router();
 
-router.get("/acciones", authenticateToken, authorizeRoles("administrador", "empleado"), getAcciones);
-router.get("/acciones/:id", authenticateToken, authorizeRoles("administrador", "empleado"), getAccion);
+router.get("/acciones", authenticateToken, authorizeRoles("administrador"), getAcciones);
+router.get("/acciones/:id", authenticateToken, authorizeRoles("administrador"), getAccion);
 router.post("/acciones", authenticateToken, authorizeRoles("administrador", "empleado"), createAccion);
 
 export default router;

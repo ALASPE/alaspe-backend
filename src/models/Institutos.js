@@ -2,10 +2,10 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { Socios } from "./Socios.js";
 
-export const Institucion = sequelize.define(
-  "Institucion",
+export const Institutos = sequelize.define(
+  "Institutos",
   {
-    institucion_id: {
+    institutos_id: {
       type: DataTypes.ENUM("CPMP", "EP", "AP", "FAP", "OPREFA"),
       primaryKey: true,
       allowNull: false,
@@ -52,11 +52,10 @@ export const Institucion = sequelize.define(
   }
 );
 
-Institucion.hasMany(Socios, {
-  foreignKey: "institucion_id",
-  sourceKey: "institucion_id",
+Institutos.hasMany(Socios, {
+  foreignKey: "institutos_id",
+  sourceKey: "institutos_id",
 });
-Socios.belongsTo(Institucion, {
-  foreignKey: "institucion_id",
-  targetKey: "institucion_id",
+Socios.belongsTo(Institutos, {
+  foreignKey: "institutos_id",
 });

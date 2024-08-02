@@ -10,10 +10,10 @@ import { authenticateToken, authorizeRoles } from '../middleware/auth.middleware
 
 const router = Router();
 
-router.get("/areas", getAreas);
-router.get("/areas/:id", getArea);
-router.post("/areas", createArea);
-router.put("/areas/:id", updateArea);
-router.delete("/areas/:id", deleteArea);
+router.get("/areas", authenticateToken, authorizeRoles("administrador"), getAreas);
+router.get("/areas/:id", authenticateToken, authorizeRoles("administrador"), getArea);
+router.post("/areas", authenticateToken, authorizeRoles("administrador"), createArea);
+router.put("/areas/:id", authenticateToken, authorizeRoles("administrador"), updateArea);
+router.delete("/areas/:id", authenticateToken, authorizeRoles("administrador"), deleteArea);
 
 export default router;

@@ -6,13 +6,14 @@ import {
   updateHistorial,
   deleteHistorial
 } from "../controllers/historialestadosprestamos.controllers.js";
+import { authenticateToken, authorizeRoles } from '../middleware/auth.middleware.js';
 
 const router = Router();
 
-router.get("/historial", getHistorial);
-router.get("/historial/:id", getHistorialById);
-router.post("/historial", createHistorial);
-router.put("/historial/:id", updateHistorial);
-router.delete("/historial/:id", deleteHistorial);
+router.get("/historial", authenticateToken, authorizeRoles("administrador", "empleado"), getHistorial);
+router.get("/historial/:id", authenticateToken, authorizeRoles("administrador", "empleado"), getHistorialById);
+router.post("/historial", authenticateToken, authorizeRoles("administrador", "empleado"), createHistorial);
+router.put("/historial/:id", authenticateToken, authorizeRoles("administrador", "empleado"), updateHistorial);
+router.delete("/historial/:id", authenticateToken, authorizeRoles("administrador"), deleteHistorial);
 
 export default router;

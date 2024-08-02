@@ -1,6 +1,7 @@
 import { Aportes } from "../models/Aportes.js";
 import { Socios } from "../models/Socios.js";
 import { Cuentas } from "../models/Cuentas.js";
+import { registrarAccion } from "../controllers/acciones.controllers.js";
 
 export const getAportes = async (req, res) => {
   try {

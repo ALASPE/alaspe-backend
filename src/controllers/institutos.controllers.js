@@ -1,9 +1,9 @@
-import { Institucion } from "../models/Institutos.js";
+import { Institutos } from "../models/Institutos.js";
 import { Socios } from "../models/Socios.js";
 
-export const getInstituciones = async (req, res) => {
+export const getInstitutos = async (req, res) => {
     try {
-      const instituciones = await Institucion.findAll({
+      const institutos = await Institutos.findAll({
         include: [
           {
             model: Socios,
@@ -11,15 +11,15 @@ export const getInstituciones = async (req, res) => {
           },
         ],
       });
-      res.json(instituciones);
+      res.json(institutos);
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
   };
 
-  export const getInstitucionById = async (req, res) => {
+  export const getInstituto = async (req, res) => {
     try {
-      const institucion = await Institucion.findOne({
+      const institutos = await Institutos.findOne({
         where: { id: req.params.id },
         include: [
           {
@@ -29,24 +29,24 @@ export const getInstituciones = async (req, res) => {
         ],
       });
   
-      if (!institucion) return res.status(404).json({ message: "Institución no encontrada" });
+      if (!institutos) return res.status(404).json({ message: "Institución no encontrada" });
   
-      res.json(institucion);
+      res.json(institutos);
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
   };
   
-export const createInstitucion = async (req, res) => {
+export const createInstituto = async (req, res) => {
     try {
       const { id, descripcion } = req.body;
   
-      const newInstitucion = await Institucion.create({
+      const newInstituto = await Institutos.create({
         id,
         descripcion,
       });
   
-      return res.status(201).json(newInstitucion);
+      return res.status(201).json(newInstituto);
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         return res
@@ -57,22 +57,22 @@ export const createInstitucion = async (req, res) => {
     }
   };
 
-  export const updateInstitucion = async (req, res) => {
+  export const updateInstituto = async (req, res) => {
     try {
       const { id } = req.params;
       const { descripcion } = req.body;
   
-      const institucion = await Institucion.findOne({ where: { id } });
+      const institutos = await Institutos.findOne({ where: { id } });
   
-      if (!institucion) {
+      if (!institutos) {
         return res.status(404).json({ message: "Institución no encontrada" });
       }
   
-      await institucion.update({
+      await institutos.update({
         descripcion,
       });
   
-      res.json(institucion);
+      res.json(institutos);
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         return res
@@ -83,15 +83,15 @@ export const createInstitucion = async (req, res) => {
     }
   };
 
-  export const deleteInstitucion = async (req, res) => {
+  export const deleteInstituto = async (req, res) => {
     try {
       const { id } = req.params;
   
-      const deletedInstitucion = await Institucion.destroy({
+      const deletedInstituto = await Institutos.destroy({
         where: { id },
       });
   
-      if (!deletedInstitucion) {
+      if (!deletedInstituto) {
         return res.status(404).json({ message: "Institución no encontrada" });
       }
   

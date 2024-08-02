@@ -11,8 +11,8 @@ import { authenticateToken, authorizeRoles } from '../middleware/auth.middleware
 const router = Router();
 
 router.get('/socio', authenticateToken, authorizeRoles("administrador", "empleado"), getSocios);
-router.get('/socio/:dni', authenticateToken, authorizeRoles("administrador", "socio", "empleado"), getSocio);
-router.post('/socio', authenticateToken, authorizeRoles(""), createSocio);
+router.get('/socio/:dni', authenticateToken, authorizeRoles("administrador", "empleado", "socio"), getSocio);
+router.post('/socio', authenticateToken, authorizeRoles("administrador"), createSocio);
 router.put('/socio/:dni', authenticateToken, authorizeRoles("administrador"), updateSocio);
 router.delete('/socio/:dni', authenticateToken, authorizeRoles("administrador"), deleteSocio);
 

@@ -102,10 +102,11 @@ export const getPrestamos = async (req, res) => {
 
   export const updatePrestamo = async (req, res) => {
     try {
-      const { id } = req.params;
-      const { monto_total, monto_pagado, interes, fecha_desembolso, fecha_vencimiento, estado, usuario_id } = req.body;
+      const { prestamo_id } = req.params;
+      const { usuario_id } = req.session;
+      const { monto_total, monto_pagado, interes, fecha_desembolso, fecha_vencimiento, estado } = req.body;
   
-      const prestamo = await Prestamos.findOne({ where: { prestamos_id: id } });
+      const prestamo = await Prestamos.findOne({ where: { prestamos_id: prestamo_id } });
   
       if (!prestamo) {
         return res.status(404).json({ message: "Préstamo no encontrado" });
@@ -127,6 +128,8 @@ export const getPrestamos = async (req, res) => {
         estado_anterior: prestamo.estado,
         estado_nuevo: estado,
       });
+
+      await registrarAccion(usuario_id, 'Modificar préstamo', `Creó un tipo de pago con ID ${prestamo.prestamos_id}`);
   
       res.json(prestamo);
     } catch (error) {
@@ -141,11 +144,14 @@ export const getPrestamos = async (req, res) => {
   
   export const deletePrestamo = async (req, res) => {
     try {
-      const { id } = req.params;
+      const { prestamo_id } = req.params;
+      const { usuario_id } = req.session;
   
       const deletedPrestamo = await Prestamos.destroy({
-        where: { prestamos_id: id },
+        where: { prestamos_id: prestamo_id },
       });
+
+      await registrarAccion(usuario_id, 'Eliminar préstamo', `Creó un tipo de pago con ID ${prestamo.prestamos_id}`);
   
       if (!deletedPrestamo) {
         return res.status(404).json({ message: "Préstamo no encontrado" });
