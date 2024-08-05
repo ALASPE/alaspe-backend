@@ -7,16 +7,11 @@ export const Usuarios = sequelize.define(
   "Usuarios",
   {
     usuario_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
       validate: {
-        isInt: { msg: "El ID debe ser un número entero." },
         notNull: { msg: "El ID no puede ser nulo." },
-        len: {
-          args: [4, 4],
-          msg: "El ID debe tener 4 dígitos.",
-        },
       },
     },
 
@@ -72,9 +67,8 @@ export const Usuarios = sequelize.define(
     },
 
     rol: {
-      type: DataTypes.ENUM("administrador", "empleado"),
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "administrador",
       validate: {
         isIn: {
           args: [["administrador", "empleado"]],
@@ -82,9 +76,13 @@ export const Usuarios = sequelize.define(
         },
       },
     },
+    createdAt:{
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    }
   },
   {
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         unique: true,

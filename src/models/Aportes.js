@@ -1,3 +1,4 @@
+
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
@@ -11,23 +12,21 @@ export const Aportes = sequelize.define(
     },
 
     monto_aporte: {
-      type: DataTypes.DECIMAL(10, 2),
-      defaultValue: 20.0,
+      type: DataTypes.FLOAT,
       validate: {
         isDecimal: true,
       },
     },
 
     monto_prevision: {
-      type: DataTypes.DECIMAL(10, 2),
-      defaultValue: 15.0,
+      type: DataTypes.FLOAT,
       validate: {
         isDecimal: true,
       },
     },
 
     fecha: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: { msg: "Debe ser una fecha válida." },

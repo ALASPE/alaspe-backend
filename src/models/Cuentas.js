@@ -8,8 +8,7 @@ export const Cuentas = sequelize.define('Cuentas', {
     autoIncrement: true
   },
   saldo_aporte: {
-    type: DataTypes.DECIMAL(10, 2),
-    defaultValue: 0.0,
+    type: DataTypes.FLOAT,
     allowNull: false,
     validate: {
       isDecimal: true,
@@ -17,8 +16,7 @@ export const Cuentas = sequelize.define('Cuentas', {
   },
 
   saldo_prevision: {
-    type: DataTypes.DECIMAL(10, 2),
-    defaultValue: 0.0,
+    type: DataTypes.FLOAT,
     allowNull: false,
     validate: {
       isDecimal: true,

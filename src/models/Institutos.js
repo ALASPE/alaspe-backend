@@ -6,34 +6,48 @@ export const Institutos = sequelize.define(
   "Institutos",
   {
     institutos_id: {
-      type: DataTypes.ENUM("CPMP", "EP", "AP", "FAP", "OPREFA"),
+      type: DataTypes.STRING,
       primaryKey: true,
-      allowNull: false,
-      validate: {
-        isIn: {
-          args: [["CPMP", "EP", "AP", "FAP", "OPREFA"]],
-          msg: "El socio debe pertenecer a alguna institución armada.",
-        },
-      },
-    },
-    Descripcion: {
-      type: DataTypes.ENUM(
-        "Caja de Pensiones Militar Policial",
-        "Ejército del Perú",
-        "Marina de guerra del Perú",
-        "Fuerza Aérea del Perú",
-        "Oficina Previsional de las Fuerzas Armadas"
-      ),
       allowNull: false,
       validate: {
         isIn: {
           args: [
             [
-              "Caja de Pensiones Militar Policial",
+              "CPMP-FAP",
+              "CPMP-EP",
+              "CPMP-AP",
+              "EP",
+              "AP",
+              "FAP",
+              "OPREFA-FAP",
+              "OPREFA-EP",
+              "OPREFA-AP",
+              "CC",
+              "MD",
+            ],
+          ],
+          msg: "El socio debe pertenecer a alguna institución armada.",
+        },
+      },
+    },
+    Descripcion: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: {
+          args: [
+            [
+              "Caja de Pensiones Militar Policial FAP",
+              "Caja de Pensiones Militar Policial Ejercito",
+              "Caja de Pensiones Militar Policial Marina",
               "Ejército del Perú",
               "Marina de guerra del Perú",
               "Fuerza Aérea del Perú",
-              "Oficina Previsional de las Fuerzas Armadas",
+              "Oficina Previsional de las Fuerzas Armadas FAP",
+              "Oficina Previsional de las Fuerzas Armadas Ejercito",
+              "Oficina Previsional de las Fuerzas Armadas Marina",
+              "Comando Conjunto",
+              "Ministerio Defensa",
             ],
           ],
           msg: "El socio debe pertenecer a alguna institución armada.",

@@ -6,9 +6,8 @@ export const Areas = sequelize.define(
   "Areas",
   {
     area_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
-      autoIncrement: true,
     },
     nombre_area: {
       type: DataTypes.STRING,

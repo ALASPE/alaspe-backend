@@ -74,7 +74,17 @@ export const Socios = sequelize.define(
     },
 
     fecha_nacimiento: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: "Debe ser una fecha válida.",
+        },
+      },
+    },
+
+    fecha_ingreso: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: {
@@ -84,7 +94,7 @@ export const Socios = sequelize.define(
     },
 
     telefono: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isNumeric: { msg: "El teléfono debe contener solo números." },
@@ -92,6 +102,20 @@ export const Socios = sequelize.define(
         notNull: { msg: "El teléfono no puede ser nulo." },
         len: {
           args: [9, 9],
+          msg: "El teléfono debe tener 9 dígitos.",
+        },
+      },
+    },
+
+    telefono_fjio: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isNumeric: { msg: "El teléfono debe contener solo números." },
+        notEmpty: { msg: "El teléfono no puede estar vacío." },
+        notNull: { msg: "El teléfono no puede ser nulo." },
+        len: {
+          args: [1, 13],
           msg: "El teléfono debe tener 9 dígitos.",
         },
       },
@@ -123,9 +147,8 @@ export const Socios = sequelize.define(
     },
 
     estado: {
-      type: DataTypes.ENUM("activo", "inactivo"),
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "activo",
       validate: {
         isIn: {
           args: [["activo", "inactivo"]],

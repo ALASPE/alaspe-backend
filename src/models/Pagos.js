@@ -11,7 +11,7 @@ export const Pagos = sequelize.define(
     },
 
     fecha_pago: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: { msg: "Debe ser una fecha válida." },
@@ -19,7 +19,7 @@ export const Pagos = sequelize.define(
       },
     },
     monto: {
-      type: DataTypes.DECIMAL(10, 2),
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         isDecimal: true,

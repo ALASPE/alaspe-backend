@@ -11,8 +11,7 @@ export const HistorialEstadosPrestamos = sequelize.define(
     },
 
     fecha_cambio: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: { msg: "Debe ser una fecha válida." },
@@ -20,18 +19,40 @@ export const HistorialEstadosPrestamos = sequelize.define(
     },
 
     estado_anterior: {
-      type: DataTypes.ENUM("pendiente", "aprobado", "rechazado", "pagado"),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        isIn: {
+          args: [
+            [
+              "pendiente",
+              "aprobado",
+              "rechazado",
+              "pagado"
+            ],
+          ],
+          msg: "El historial de prestamos debe tener un estado válido.",
+        },
         notEmpty: { msg: "El estado no puede estar vacío." },
         notNull: { msg: "El estado no puede ser nulo." },
       },
     },
 
     estado_nuevo: {
-      type: DataTypes.ENUM("pendiente", "aprobado", "rechazado", "pagado"),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        isIn: {
+          args: [
+            [
+              "pendiente",
+              "aprobado",
+              "rechazado",
+              "pagado"
+            ],
+          ],
+          msg: "El historial de prestamos debe tener un estado válido.",
+        },
         notEmpty: { msg: "El estado no puede estar vacío." },
         notNull: { msg: "El estado no puede ser nulo." },
       },

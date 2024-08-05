@@ -13,7 +13,7 @@ export const Prestamos = sequelize.define(
     },
 
     monto_total: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         isFloat: { msg: "El monto debe ser un número decimal." },
@@ -22,7 +22,7 @@ export const Prestamos = sequelize.define(
     },
 
     monto_pagado: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         isFloat: { msg: "El monto debe ser un número decimal." },
@@ -31,7 +31,7 @@ export const Prestamos = sequelize.define(
     },
 
     interes: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         isFloat: { msg: "El interés debe ser un número decimal." },
@@ -40,8 +40,7 @@ export const Prestamos = sequelize.define(
     },
 
     fecha_solicitud: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: { msg: "Debe ser una fecha válida." },
@@ -49,7 +48,7 @@ export const Prestamos = sequelize.define(
     },
 
     fecha_desembolso: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: { msg: "Debe ser una fecha válida." },
@@ -58,7 +57,7 @@ export const Prestamos = sequelize.define(
     },
 
     fecha_vencimiento: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: { msg: "Debe ser una fecha válida." },
@@ -67,9 +66,13 @@ export const Prestamos = sequelize.define(
     },
 
     estado: {
-      type: DataTypes.ENUM("pendiente", "aprobado", "rechazado", "pagado"),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        isIn: {
+          args: [["pendiente", "aprobado", "rechazado", "pagado"]],
+          msg: "El estado debe ser válido.",
+        },
         notEmpty: { msg: "El estado no puede estar vacío." },
         notNull: { msg: "El estado no puede ser nulo." },
       },
