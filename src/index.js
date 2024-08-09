@@ -6,7 +6,7 @@ const main = async () => {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
 
-        await sequelize.sync({ alter: true });
+        await sequelize.sync({ alter: false });
 
         const PORT = process.env.PORT || 4000;
         app.listen(PORT, () => {
