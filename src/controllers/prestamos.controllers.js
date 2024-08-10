@@ -3,6 +3,37 @@ import { Pagos } from "../models/Pagos.js";
 import { HistorialEstadosPrestamos } from "../models/HistorialEstadosPrestamos.js";
 import { Socios } from "../models/Socios.js";
 import { Usuarios } from "../models/Usuarios.js";
+import { Institutos } from "../models/Institutos.js";
+
+
+export const getTotalPrestamosPorInstituto = async (req, res) => {
+  try {
+      const prestamosPorInstituto = await Institutos.findAll({
+          include: [
+              {
+                  model: Socios,
+                  attributes: [],
+                  include: [
+                      {
+                          model: Prestamos,
+                          attributes: [],
+                          where: { estado: 'aprobado' },
+                      },
+                  ],
+              },
+          ],
+          attributes: [
+              'institutos_id',
+              [sequelize.fn('SUM', sequelize.col('Socios.Prestamos.monto_total')), 'total_monto'],
+          ],
+          group: ['Institutos.institutos_id'],
+      });
+
+      res.json(prestamosPorInstituto);
+  } catch (error) {
+      return res.status(500).json({ message: error.message });
+  }
+};
 
 export const sumMontoTotalAprobados = async (req, res) => {
   try {
