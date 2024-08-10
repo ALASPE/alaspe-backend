@@ -2,6 +2,15 @@ import bcrypt from "bcrypt";
 import { Socios } from "../models/Socios.js";
 import moment from "moment";
 
+export const countSocios = async (req, res) => {
+  try {
+    const totalSocios = await Socios.count();
+    res.json({ total: totalSocios });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 export const getSocios = async (req, res) => {
   try {
     const socios = await Socios.findAll({
