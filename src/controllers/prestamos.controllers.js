@@ -4,6 +4,18 @@ import { HistorialEstadosPrestamos } from "../models/HistorialEstadosPrestamos.j
 import { Socios } from "../models/Socios.js";
 import { Usuarios } from "../models/Usuarios.js";
 
+export const sumMontoTotalAprobados = async (req, res) => {
+  try {
+    const totalMonto = await Prestamos.sum('monto_total', {
+      where: { estado: 'aprobado' },
+    });
+
+    res.json({ totalMonto });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 export const countPrestamosByEstado = async (req, res) => {
   try {
     const estados = ['pendiente', 'aprobado', 'rechazado', 'pagado'];

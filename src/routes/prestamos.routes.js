@@ -7,6 +7,7 @@ import {
   deletePrestamo,
   countAllPrestamos,
   countPrestamosByEstado,
+  sumMontoTotalAprobados,
 } from "../controllers/prestamos.controllers.js";
 import { authenticateToken, authorizeRoles } from '../middleware/auth.middleware.js';
 
@@ -19,5 +20,7 @@ router.put("/prestamos/:id", authenticateToken, authorizeRoles("administrador", 
 router.delete("/prestamos/:id", authenticateToken, authorizeRoles("administrador", "empleado"), deletePrestamo);
 router.get('/prestamos/countByEstado', authenticateToken, authorizeRoles("administrador", "empleado"), countPrestamosByEstado);
 router.get('/prestamos/countAll' , authenticateToken, authorizeRoles("administrador", "empleado"), countAllPrestamos);
+router.get('/prestamos/sumMontoTotalAprobados', authenticateToken, authorizeRoles("administrador", "empleado"), sumMontoTotalAprobados);
+
 
 export default router;
