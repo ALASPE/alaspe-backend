@@ -4,6 +4,32 @@ import { HistorialEstadosPrestamos } from "../models/HistorialEstadosPrestamos.j
 import { Socios } from "../models/Socios.js";
 import { Usuarios } from "../models/Usuarios.js";
 
+export const countPrestamosByEstado = async (req, res) => {
+  try {
+    const estados = ['pendiente', 'aprobado', 'rechazado', 'pagado'];
+    const conteos = {};
+
+    for (const estado of estados) {
+      conteos[estado] = await Prestamos.count({
+        where: { estado },
+      });
+    }
+
+    res.json(conteos);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const countAllPrestamos = async (req, res) => {
+  try {
+    const totalPrestamos = await Prestamos.count();
+    res.json({ total: totalPrestamos });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 export const getPrestamos = async (req, res) => {
     try {
       const prestamos = await Prestamos.findAll({
