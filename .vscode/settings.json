@@ -1,0 +1,6 @@
+{
+  "workbench.colorTheme": "Solarized Dark",
+  "terminal.explorerKind": "external",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.tabs.defaultColor": "terminal.ansiMagenta"
+}

@@ -71,7 +71,7 @@ export const loginUsuario = async (req, res) => {
 
     res.status(200).json({
       message: "Inicio de sesión exitoso",
-      // redirectUrl: usuario.rol === "admin" ? "/admin" : "/socio",
+      redirectUrl: usuario.rol === "administrado" ? "/dashboard" : "/dashbaord",
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
